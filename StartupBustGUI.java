@@ -23,7 +23,9 @@ public class StartupBustGUI {
         Startup one = new Startup(); one.setName("poniez");
         Startup two = new Startup(); two.setName("hacqi");
         Startup three = new Startup(); three.setName("cabista");
-        startups.add(one); startups.add(two); startups.add(three);
+        startups.add(one);
+        startups.add(two);
+        startups.add(three);
         for (Startup s : startups) s.setLocationCells(helper.placeStartup(3));
     }
 
@@ -60,14 +62,13 @@ public class StartupBustGUI {
         frame.add(south, BorderLayout.SOUTH);
         frame.setVisible(true);
     }
-
     private void processGuess(String guess) {
-        if (startups.isEmpty()) return;
+        if (startups.isEmpty())
+            return;
         numOfGuesses++;
         guessLabel.setText("Guesses: " + numOfGuesses);
         String result = "miss";
 
-        // find the button and color it
         int col = ALPHABET.indexOf(String.valueOf(guess.charAt(0)));
         int row = Integer.parseInt(String.valueOf(guess.charAt(1)));
         JButton btn = cells[row][col];
@@ -85,7 +86,15 @@ public class StartupBustGUI {
                 startups.remove(s);
                 if (startups.isEmpty()) {
                     statusLabel.setText("ALL SUNK in " + numOfGuesses + " guesses!");
-                    JOptionPane.showMessageDialog(null, "You sank all ships in " + numOfGuesses + " guesses!");
+                    String msg = "All the ships are dead! Your stock is now worthless.\n\n";
+                    if (numOfGuesses <= 18) {
+                        msg += "It only took you " + numOfGuesses + " guesses.\n";
+                        msg += "You got out before your options sank.";
+                    } else {
+                        msg += "Took you long enough. " + numOfGuesses + " guesses.\n";
+                        msg += "Finished before you ran out of options.";
+                    }
+                    JOptionPane.showMessageDialog(null, msg);
                 } else {
                     statusLabel.setText("SUNK! " + startups.size() + " ship(s) left!");
                 }
@@ -97,7 +106,6 @@ public class StartupBustGUI {
             statusLabel.setText("Miss! Try again.");
         }
     }
-
     public static void main(String[] args) {
         SwingUtilities.invokeLater(StartupBustGUI::new);
     }

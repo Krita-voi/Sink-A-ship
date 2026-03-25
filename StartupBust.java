@@ -54,7 +54,7 @@ public class StartupBust {
     }
 
     private void finishGame(){
-        System.out.println("All the startup are dead! Your stock is now wrothless");
+        System.out.println("All the ships are dead! Your stock is now wrothless");
         if(numOfGuesses <= 18){
             System.out.println("It only took you " + numOfGuesses + " guesses.");
             System.out.println("You got out before your options sank.");
